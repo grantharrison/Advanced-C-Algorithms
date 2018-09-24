@@ -38,11 +38,27 @@ struct adjList *SortAdjList(struct adjList*);
 int main(void)
 {
     struct adjList *list;
-    int s, d, q;
+    int s, d, q = 0;
 
-    printf("\nPlease enter the largest number in the edge list\n");
-    scanf("%d", &q);
+    //printf("Please enter the largest number in the .txt file\n");
+    //scanf("%d", &q);
+    //q++;
+
+    fp = fopen("vertices.txt", "r");
+    while (fscanf(fp, "%d %d", &s, &d) != EOF)
+    {
+	if(q < s)
+	{
+	    q = s;
+	}
+	if(q < d)
+	{
+	    q = d;
+	}
+    }
     q++;
+
+    fclose(fp);
 
     list = CreateAdjList(q);
 
@@ -55,7 +71,7 @@ int main(void)
     list = SortAdjList(list);
 
     printAdj(list);
-   // freeList(list);
+    freeList(list);
 
     fclose(fp);
 
@@ -143,4 +159,21 @@ struct adjList *SortAdjList(struct adjList *list)
     }
     
     return q;
+}
+
+void freeList(struct adjList *list)
+{
+    if (list == NULL)
+    {
+        printf("Nothing to free.\n");
+        return;
+    }
+
+    for (int i=0; i < (list->v); i++)
+    {
+	free(list->array[i].next);
+    }
+    
+    free(list);
+
 }
