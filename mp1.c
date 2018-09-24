@@ -23,14 +23,13 @@ struct Node *CreateNode(int);
 struct adjList *CreateAdjList(int);
 void CreateAdj(struct adjList*, int, int);
 void printAdj(struct adjList*);
-void MergeSort(struct Node**);
-struct Node* SortedMerge(struct Node*, struct Node*);
-void Mid(struct Node*, struct Node**, struct Node**);
+void freeList(struct adjList*);
+struct adjList *SortAdjList(struct adjList*);
 
 int main(void)
 {
     struct adjList *list;
-    int s, d, i, q;
+    int s, d, q;
 
     printf("\nPlease enter the largest number in the edge list\n");
     scanf("%d", &q);
@@ -38,18 +37,16 @@ int main(void)
 
     list = CreateAdjList(q);
 
-    fp = fopen("practice.txt", "r");
+    fp = fopen("vertices.txt", "r");
     while (fscanf(fp, "%d %d", &s, &d) != EOF)
     {
 	CreateAdj(list, s, d);
     }
 
-    for (i=0; i < q; i++)
-    {
-	MergeSort(&(list->array[i].next));
-    }
+    list = SortAdjList(list);
 
     printAdj(list);
+   // freeList(list);
 
     fclose(fp);
 
@@ -62,7 +59,6 @@ struct Node *CreateNode(int x)
 
     q->data = x;
     q->next = NULL;
-
     return q;
 }
 
@@ -116,64 +112,26 @@ void printAdj(struct adjList *list)
     }
 } 
 
-void MergeSort(struct Node** q) 
-{ 
-    struct Node* p = *q; 
-    struct Node* a; 
-    struct Node* b; 
-    if ((p == NULL) || (p->next == NULL)) 
-    { 
-	return; 
-    } 
-    Mid(p, &a, &b);  
-    MergeSort(&a); 
-    MergeSort(&b); 
+struct adjList *SortAdjList(struct adjList *list)
+{
+    int u, v;
+    struct adjList *q = CreateAdjList(list->v);
+    struct Node *p, *z;
 
-    *q = SortedMerge(a, b);
+    v = list->v;
+
+    for (int i=0; i < (v); v--)
+    {
+	p = list->array[v].next;
+	while (p != NULL)
+	{
+	    u = p->data;
+	    z = CreateNode(v);
+            z->next = q->array[u].next;
+            q->array[u].next = z;
+	    p = p->next;
+	}
+    }
     
+    return q;
 }
-
-struct Node* SortedMerge(struct Node* a, struct Node* b) 
-{ 
-    struct Node* r = NULL; 
-    if (a == NULL)
-    {
-	return(b);
-    }
-    else if (b==NULL) 
-    {
-	return(a);
-    }
-    if (a->data <= b->data) 
-    { 
-	r = a; 
-	r->next = SortedMerge(a->next, b); 
-    } 
-    else
-    { 
-	r = b; 
-	r->next = SortedMerge(a, b->next); 
-    } 
-    return(r); 
-} 
-
-void Mid(struct Node* s, struct Node** g, struct Node** b) 
-{ 
-    struct Node* z; 
-    struct Node* x; 
-    x = s; 
-    z = s->next; 
-  
-    while (z != NULL) 
-    { 
-	z = z->next; 
-	if (z != NULL) 
-	{ 
-	    x = x->next; 
-	    z = z->next; 
-	} 
-    } 
-    *g = s; 
-    *b = x->next; 
-    x->next = NULL; 
-} 
