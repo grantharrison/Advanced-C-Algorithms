@@ -40,10 +40,6 @@ int main(void)
     struct adjList *list;
     int s, d, q = 0;
 
-    //printf("Please enter the largest number in the .txt file\n");
-    //scanf("%d", &q);
-    //q++;
-
     fp = fopen("vertices.txt", "r");
     while (fscanf(fp, "%d %d", &s, &d) != EOF)
     {
