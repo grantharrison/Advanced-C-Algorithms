@@ -1,4 +1,4 @@
-/* Grant Harrison
+/* Grant Harrison and Gabe Heim
  * 
  * Machine Problem 1
  *
@@ -40,7 +40,7 @@ int main(void)
     struct adjList *list;
     int s, d, q = 0;
 
-    fp = fopen("vertices.txt", "r");
+    fp = fopen("practice.txt", "r");
     while (fscanf(fp, "%d %d", &s, &d) != EOF)
     {
 	if(q < s)
@@ -58,7 +58,7 @@ int main(void)
 
     list = CreateAdjList(q);
 
-    fp = fopen("vertices.txt", "r");
+    fp = fopen("practice.txt", "r");
     while (fscanf(fp, "%d %d", &s, &d) != EOF)
     {
 	CreateAdj(list, s, d);
