@@ -1,6 +1,15 @@
-//Grant Harrison
-
-
+/* Grant Harrison
+ * 
+ * Machine Problem 1
+ *
+ * CS 3050 
+ *
+ * This program runs in linear time because my insert function is dependent
+ * on the number of Vertices and the number of Edges and my sorting function is
+ * the one you gave us sudo-code for in class which runs in linear time depending 
+ * on the number of Edges and Vertices so those together give you an overall run
+ * time of O(|v|+|E|) which is linear.
+ */
 
 #include<stdio.h>
 #include<stdlib.h>
