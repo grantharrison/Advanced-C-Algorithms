@@ -16,7 +16,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#define MAX 100
+#define MAX 100 // If you have a vertex size greater than 100, change this to appropriate size.
 
 struct Node
 {
